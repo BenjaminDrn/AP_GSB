@@ -1,0 +1,304 @@
+/*==================== FONTS ====================*/
+
+
+/*Roboto*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+/*==================== VARIABLES CSS ====================*/
+
+:root {
+    /*HEADER HEIGHT*/
+    --header-heigth: 5rem;
+    /*FONT-SIZE*/
+    --fsize-icones: 30px;
+    /*COLORS*/
+    --first-color: #ffffff;
+    --second-color: #333333;
+    --third-color: #0084ff;
+    --fourth-color: #ececec;
+    --deconnexion-color: #d63434;
+    --deconnexion-color-hover: #d30000;
+}
+
+@media screen and (min-width: 1200px) {
+     :root {
+        --header-heigth: 6rem;
+    }
+}
+
+
+/* @media screen and (min-width: 576px) {}
+
+@media screen and (min-width: 768px) {}
+
+@media screen and (min-width: 992px) {}
+
+@media screen and (min-width: 1200px) {} */
+
+
+/* ==================== CLASSES GENERALES ==================== */
+
+*,
+ ::after,
+ ::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    outline: none;
+}
+
+body {
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* ==================== Loader ==================== */
+
+#loader {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+#loader .bx-loader-alt {
+    animation: spin 1s linear infinite;
+    color: var(--second-color);
+    font-size: 50px;
+}
+
+
+/* ==================== HEADER ==================== */
+
+#header {
+    width: 100%;
+    height: var(--header-heigth);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+#header .nav__container {
+    width: 100%;
+    height: var(--header-heigth);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+#header .nav__container .nav__toggleBtn .bx-menu {
+    font-size: var(--fsize-icones);
+}
+
+#header .nav__container .nav__brand a img {
+    height: var(--header-heigth);
+    padding: 15px;
+}
+
+#header .nav__container .nav__menu {
+    width: 100%;
+    height: calc(100vh - var(--header-heigth));
+    position: fixed;
+    top: var(--header-heigth);
+    left: -100%;
+    padding: 40px;
+    background: var(--fourth-color);
+    transition: all 0.2s ease-in-out;
+}
+
+#header .nav__container .show_menu {
+    left: 0%;
+}
+
+#header .nav__container .nav__menu .nav__list .nav__item .nav__link {
+    position: relative;
+    display: block;
+    padding: 20px 0;
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--second-color);
+    transition: 0.3s all ease-in-out;
+}
+
+#header .nav__container .nav__leaveBtn button {
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--deconnexion-color);
+    color: var(--first-color);
+    border: none;
+    border-radius: 30px;
+    user-select: none;
+    cursor: pointer;
+    transition: 0.2s all ease-in-out;
+}
+
+#leaveBtn1 {
+    display: none;
+}
+
+#header .nav__container .nav__menu .nav__list .nav__leaveBtn button:hover {
+    background: var(--deconnexion-color-hover);
+}
+
+
+/* ==================== HEADER RESPONSIVE ==================== */
+
+@media screen and (min-width: 768px) {
+    #header .nav__container {
+        width: 100%;
+    }
+    #header .nav__container .nav__toggleBtn {
+        display: none;
+    }
+    #header .nav__container .nav__brand a img {
+        padding: 10px;
+    }
+    #header .nav__container .nav__menu {
+        width: auto;
+        height: auto;
+        padding: 0px;
+        position: relative;
+        top: 0;
+        display: flex;
+        align-items: center;
+        background: none;
+    }
+    #header .nav__container .nav__menu .nav__list {
+        display: flex;
+        align-items: center;
+    }
+    #header .nav__container .nav__menu .nav__list .nav__item .nav__link {
+        padding: 31px 0;
+        margin-left: 30px;
+        font-size: 15px;
+    }
+    #header .nav__container .nav__menu .nav__list .nav__item .nav__link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: var(--third-color);
+        transition: 0.2s all ease-in-out;
+    }
+    #header .nav__container .nav__menu .nav__list .nav__item .nav__link:hover:after {
+        width: 100%;
+    }
+    #header .nav__container .nav__menu .nav__list .nav__item .nav__link:hover {
+        color: var(--third-color);
+    }
+    #leaveBtn1 {
+        display: block;
+        margin-left: 30px;
+    }
+    #leaveBtn1 button {
+        width: 130px;
+        padding: 10px 15px;
+    }
+    #leaveBtn2 {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    #header .nav__container .nav__brand a img {
+        padding: 20px;
+    }
+    #header .nav__container .nav__menu .nav__list .nav__item .nav__link {
+        margin-left: 60px;
+        padding: 39px 0;
+    }
+    #leaveBtn1 {
+        margin-left: 60px;
+    }
+}
+
+
+/* ==================== HEADER + FORMULAIRE DE CONNEXION ==================== */
+
+#header-connexion {
+    width: 100%;
+    height: var(--header-heigth);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+#header-connexion img {
+    height: var(--header-heigth);
+    padding: 10px;
+}
+
+form {
+    width: 90%;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    background: var(--first-color);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+form h1 {
+    text-align: center;
+    font-size: 25px;
+}
+
+form label input,
+form input[type="submit"] {
+    width: 100%;
+    height: 45px;
+    margin-top: 25px;
+    font-size: 15px;
+}
+
+form label input {
+    padding: 15px;
+    border: solid 1.5px var(--fourth-color);
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    text-transform: uppercase;
+    font-weight: 600;
+    background: var(--third-color);
+    color: var(--first-color);
+    border: none;
+    border-radius: 5px;
+}
+
+
+/* ====================  RESPONSIVE HEADER + FORMULAIRE DE CONNEXION ==================== */
+
+@media screen and (min-width: 576px) {}
+
+@media screen and (min-width: 768px) {}
+
+@media screen and (min-width: 992px) {}
+
+@media screen and (min-width: 1200px) {}
