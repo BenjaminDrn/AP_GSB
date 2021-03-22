@@ -1,5 +1,5 @@
 <?php
-include('authentification.php');
+include('INCLUDE/authentification.php');
 // on teste si le visiteur a soumis le formulaire de connexion
 if (isset($_POST['connexion']) && $_POST['connexion'] == 'Connexion') {
 	if ((isset($_POST['login']) && !empty($_POST['login'])) && (isset($_POST['pass']) && !empty($_POST['pass']))) {
@@ -38,14 +38,14 @@ if (isset($_POST['connexion']) && $_POST['connexion'] == 'Connexion') {
 
     <!-- ===================== HEAD ===================== -->
     <?php
-        include('HTML/head.html');
+        include('INCLUDE/head.html');
     ?>
 
 <body>
     <header id="header-connexion">
         <img src="IMG/logoGSB" alt="Logo du laboratoire Galaxy Swiss Bourdin (GSB).">
     </header>
-    <form action="connexion.php" method="post" >
+    <form action="connexion.php" method="post" id="connexion">
         <h1>Identifiez-vous</h1>
         <label for="login">
             <input type="text" name="login" placeholder="login" required> 

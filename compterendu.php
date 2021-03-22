@@ -1,28 +1,22 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['login'])) {
-        header ('Location: connexion.php');
-        exit();
-    }
+    include('INCLUDE/sessionStart.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 
     <!-- ===================== HEAD ===================== -->
     <?php
-        include('HTML/head.html');
+        include('INCLUDE/head.html');
     ?>
 
 <body>
 
     <!-- ===================== HEADER + NAV ===================== -->   
     <?php 
-        include('HTML/navBar.php');
+        include('INCLUDE/navBar.html');
     ?>
 
-
     <main>
-
     <!-- ===================== SECTION BREADCRUMBS NAVIGATION ===================== -->           
         <section id="breadcrumbs-nav">
             <ul>
@@ -32,12 +26,20 @@
         </section>
 
     <!-- ===================== SECTION CREATION COMPTE RENDUS ===================== -->           
-
+    <i class='bx bxs-file-pdf'></i>
     </main>
 
-    <i class='bx bxs-file-pdf'></i>
+    
 
-    <script src="HTML/main.js"></script>
+    <!-- ===================== FOOTER ===================== -->
+    <?php
+        include('INCLUDE/footer.html');
+    ?>
+
+    <!-- ===================== SCRIPT JS ===================== -->
+    <?php
+        include('INCLUDE/script.html');
+    ?>
 
 </body>
 </html>

@@ -1,16 +1,12 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['login'])) {
-        header ('Location: connexion.php');
-        exit();
-    }
+    include('INCLUDE/sessionStart.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
     
     <!-- ===================== HEAD ===================== -->
     <?php
-        include('HTML/head.html');
+        include('INCLUDE/head.html');
     ?>
 
 <body>
@@ -22,39 +18,39 @@
     <!-- ===================== HEADER + NAV ===================== -->
 
     <?php
-        include('HTML/navBar.php');
+        include('INCLUDE/navBar.html');
     ?>  
     
 
     <main>
 
-        
-        <section id="">
+        <!-- ===================== SECTION DIRECTION PAGE ===================== -->
+        <section id="direction-list">
                 <div class="">
                     <a href="">
-                        <i class='bx bx-detail'></i>
+                        <i class="fas fa-paste"></i>
                         <hr>
                         <p>Compte-rendu</p>
                     </a>
                 </div>
                 <div class="">
                     <a href="">
-                        <i class='bx bx-user'></i>
-                        <i class='bx bxs-user'></i>
+                        <i class="fas fa-user"></i>
                         <hr>
                         <p>Visiteurs</p>
                     </a>
                 </div>
                 <div class="">
                     <a href="">
-
+                        <i class="fas fa-user-md"></i>
                         <hr>
                         <p>Praticiens</p>
                     </a>
                 </div>
                 <div class="">
                     <a href="">
-
+                        <i class="fas fa-pills"></i>
+                        <i class="fas fa-capsules"></i>
                         <hr>
                         <p>Medicaments</p>
                     </a>
@@ -63,7 +59,15 @@
 
     </main>
 
+    <!-- ===================== FOOTER ===================== -->
+    <?php
+        include('INCLUDE/footer.html');
+    ?>
 
-    <script src="HTML/main.js"></script>
+    <!-- ===================== SCRIPT JS ===================== -->
+    <?php
+        include('INCLUDE/script.html');
+    ?>
+    
 </body>
 </html>
