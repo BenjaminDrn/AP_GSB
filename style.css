@@ -1,4 +1,4 @@
-/*==================== FONTS ====================*/
+/* ==================== FONTS ==================== */
 
 
 /*Roboto*/
@@ -16,9 +16,9 @@
     --first-color: #ffffff;
     --second-color: #333333;
     --third-color: #0084ff;
-    --fourth-color: #ececec;
-    --deconnexion-color: #d63434;
-    --deconnexion-color-hover: #d30000;
+    --fourth-color: #f0f0f0;
+    --deconnexion-color: #db4b4b;
+    --deconnexion-color-hover: #e00000;
 }
 
 @media screen and (min-width: 1200px) {
@@ -52,6 +52,7 @@
 body {
     font-size: 15px;
     font-family: 'Roboto', sans-serif;
+    background: var(--fourth-color);
 }
 
 li {
@@ -74,7 +75,7 @@ a {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 200;
 }
 
 #loader .bx-loader-alt {
@@ -178,6 +179,7 @@ a {
         padding: 0px;
         position: relative;
         top: 0;
+        left: 0%;
         display: flex;
         align-items: center;
         background: none;
@@ -197,6 +199,16 @@ a {
         bottom: 0;
         left: 0;
         width: 0%;
+        height: 3px;
+        background: var(--third-color);
+        transition: 0.2s all ease-in-out;
+    }
+    #header .nav__container .nav__menu .nav__list .nav__item .active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
         height: 3px;
         background: var(--third-color);
         transition: 0.2s all ease-in-out;
@@ -234,7 +246,39 @@ a {
 }
 
 
-/* ==================== HEADER + FORMULAIRE DE CONNEXION ==================== */
+/* ==================== BREADCRUMB ==================== */
+
+#breadcrumbs-nav {
+    margin: 20px;
+    background: var(--first-color);
+    border-radius: 5px;
+}
+
+#breadcrumbs-nav ul {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+}
+
+#breadcrumbs-nav ul li {
+    font-size: 12px;
+    color: #666666;
+}
+
+#breadcrumbs-nav ul li+li:before {
+    padding: 8px;
+    color: #666666;
+    content: "/\00a0";
+}
+
+#breadcrumbs-nav ul li a {
+    color: var(--third-color);
+    text-decoration: underline;
+}
+
+
+/* ==================== HEADER + FORMULAIRE DE CONNEXION (page : connexion.php) ==================== */
 
 #header-connexion {
     width: 100%;
@@ -295,10 +339,22 @@ form input[type="submit"] {
 
 /* ====================  RESPONSIVE HEADER + FORMULAIRE DE CONNEXION ==================== */
 
-@media screen and (min-width: 576px) {}
+@media screen and (min-width: 768px) {
+    form {
+        width: 70%;
+    }
+}
 
-@media screen and (min-width: 768px) {}
+@media screen and (min-width: 992px) {
+    form {
+        width: 50%;
+        padding: 30px;
+    }
+}
 
-@media screen and (min-width: 992px) {}
-
-@media screen and (min-width: 1200px) {}
+@media screen and (min-width: 1200px) {
+    form {
+        width: 30%;
+        padding: 40px;
+    }
+}
