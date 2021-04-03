@@ -10,10 +10,6 @@
     ?>
 
 <body>
-    <!-- ===================== LOADER ===================== -->
-    <div id="loader">
-        <i class='bx bx-loader-alt'></i>
-    </div>
     
     <!-- ===================== HEADER + NAV ===================== -->
 
@@ -26,43 +22,33 @@
 
         <!-- ===================== SECTION DIRECTION PAGE ===================== -->
         <section id="direction-list">
-                <div class="">
-                    <a href="">
-                        <i class="fas fa-paste"></i>
+                
+                    <a href="rapportVisite.php" class="directionList__container">
+                        <span><i class="fas fa-paste"></i></span>
                         <hr>
-                        <p>Compte-rendu</p>
+                        <p>Rapports de visite</p>
                     </a>
-                </div>
-                <div class="">
-                    <a href="">
-                        <i class="fas fa-user"></i>
+                
+                    <a href="Visiteurs.php" class="directionList__container">
+                        <span><i class="fas fa-user"></i></span>                      
                         <hr>
                         <p>Visiteurs</p>
                     </a>
-                </div>
-                <div class="">
-                    <a href="">
-                        <i class="fas fa-user-md"></i>
+
+                    <a href="Praticiens.php" class="directionList__container">
+                        <span><i class="fas fa-user-md"></i></span>
                         <hr>
                         <p>Praticiens</p>
                     </a>
-                </div>
-                <div class="">
-                    <a href="">
-                        <i class="fas fa-pills"></i>
-                        <i class="fas fa-capsules"></i>
+
+                    <a href="medicaments.php" class="directionList__container">
+                        <span><i class="fas fa-pills"></i></span>
                         <hr>
                         <p>Medicaments</p>
                     </a>
-                </div>
         </section>
 
     </main>
-
-    <!-- ===================== FOOTER ===================== -->
-    <?php
-        include('INCLUDE/footer.html');
-    ?>
 
     <!-- ===================== SCRIPT JS ===================== -->
     <?php

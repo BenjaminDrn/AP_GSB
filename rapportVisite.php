@@ -21,20 +21,18 @@
         <section id="breadcrumbs-nav">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
-                <li>Compte-rendus</li>
+                <li>Rapports de visite</li>
             </ul>
         </section>
+    <!-- ===================== SECTION INFORMATIONS RAPPORTS DE VISITE ===================== -->
 
-    <!-- ===================== SECTION CREATION COMPTE RENDUS ===================== -->           
+    <section id="rapports-visite" class="container">
+
+    </section>
+
+    <!-- ===================== SECTION CREATION RAPPORTS ===================== -->           
     <i class='bx bxs-file-pdf'></i>
     </main>
-
-    
-
-    <!-- ===================== FOOTER ===================== -->
-    <?php
-        include('INCLUDE/footer.html');
-    ?>
 
     <!-- ===================== SCRIPT JS ===================== -->
     <?php

@@ -64,24 +64,15 @@ a {
 }
 
 
-/* ==================== LOADER ==================== */
+/* ==================== MESSAGE D'ERREUR CONNEXION ==================== */
 
-#loader {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 200;
-}
-
-#loader .bx-loader-alt {
-    animation: spin 1s linear infinite;
-    color: var(--second-color);
-    font-size: 50px;
+.error__msg {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: var(--first-color);
+    padding: 15px 20px;
+    border-radius: 5px;
 }
 
 
@@ -232,6 +223,9 @@ a {
     #header .nav__container .nav__menu .nav__list .nav__item .nav__link:hover {
         color: var(--third-color);
     }
+}
+
+@media screen and (min-width: 992px) {
     #leaveBtn1 {
         display: block;
         margin-left: 30px;
@@ -263,12 +257,85 @@ a {
 
 #direction-list {
     width: 100%;
-    padding: 30px;
+    padding: 20px;
     display: flex;
     justify-content: space-around;
-    align-items: center;
     flex-wrap: wrap;
 }
+
+#direction-list .directionList__container {
+    width: 100%;
+    margin-bottom: 20px;
+    background: var(--first-color);
+    border-radius: 5px;
+    text-align: center;
+}
+
+#direction-list .directionList__container span {
+    display: block;
+    color: var(--second-color);
+    font-size: 60px;
+    padding: 30px;
+    transition: all 0.2s ease-in-out;
+}
+
+#direction-list .directionList__container:hover span {
+    color: var(--third-color);
+}
+
+#direction-list .directionList__container hr {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid var(--second-color);
+    background: var(--second-color);
+    transition: all 0.2s ease-in-out;
+}
+
+#direction-list .directionList__container:hover hr {
+    border: 1px solid var(--third-color);
+    background: var(--third-color);
+}
+
+#direction-list .directionList__container p {
+    padding: 30px;
+    color: var(--second-color);
+    transition: all 0.2s ease-in-out;
+}
+
+#direction-list .directionList__container:hover p {
+    color: var(--third-color);
+}
+
+
+/* ====================  RESPONSIVE SECTION DIRECTIONS PAGE ==================== */
+
+@media screen and (min-width: 576px) {
+    #direction-list {
+        padding: 30px;
+    }
+    #direction-list .directionList__container {
+        width: calc(100% / 2 - 20px);
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #direction-list .directionList__container {
+        width: calc(100% / 2 - 30px);
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #direction-list {
+        height: calc(100vh - var(--header-heigth) - 78px);
+        align-items: center;
+    }
+    #direction-list .directionList__container {
+        width: calc(100% / 4 - 30px);
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (min-width: 1200px) {}
 
 
 /* ==================== SECTION FOOTER ==================== */
@@ -432,12 +499,15 @@ footer {
 }
 
 .container form label input,
-.container form label textarea {
+.container form label select,
+.container form label textarea,
+.container form label input[type="submit"] {
     width: 60%;
     padding: 10px;
     border: solid 1.5px var(--fourth-color);
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
+    font-size: 13px;
     resize: none;
 }
 
@@ -450,13 +520,31 @@ footer {
     width: calc(50% - 20px);
 }
 
+.container form label select {
+    width: calc(60% - 50px);
+    height: 40px;
+    border-radius: 5px 0px 0px 5px;
+    cursor: pointer;
+}
+
+.container form label textarea {
+    height: 100px;
+}
+
+.container form label input[type="submit"] {
+    width: 50px;
+    height: 40px;
+    border-radius: 0px 5px 5px 0px;
+}
+
 .container .action__btn {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.container .action__btn a button {
+.container .action__btn a button,
+.container .action__btn input {
     padding: 10px 20px;
     background: var(--fourth-color);
     color: var(--second-color);
@@ -467,7 +555,7 @@ footer {
     transition: 0.2s all ease-in-out;
 }
 
-.container .action__btn .action__btn_move a button:hover {
+.container .action__btn .action__btn_move input:hover {
     background: var(--third-color);
     color: var(--first-color);
 }
