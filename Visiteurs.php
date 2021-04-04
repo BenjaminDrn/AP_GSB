@@ -1,10 +1,24 @@
 <?php
+
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
-
-    $req = $bdd->prepare('SELECT * from visiteur');
+    $req = $bdd->prepare('SELECT * FROM visiteur');
     $req->execute();
+
+    if(isset($_POST["selectFamilyName"]) || isset($_POST["next"]) || isset($_POST["previous"])){
+        $number = $_POST["selectFamilyName"];
+        $req = $bdd->prepare('SELECT * from visiteur WHERE VIS_MATRICULE = "'.$number.'" ');
+        
+        // if(isset($_POST["next"])){
+        //     $number += 1;
+        // } elseif(isset($_POST["previous"])){
+        //     $number -= 1;
+        // }
+        
+        $req->execute();
+        
+    }
     $data = $req->fetch();
 
 
@@ -42,19 +56,18 @@
                     <select name="selectFamilyName" id="selectFamilyName">
                     <?php
 
-                        $reqNomVisiteur = $bdd->prepare('SELECT VIS_NOM from visiteur');
+                        $reqNomVisiteur = $bdd->prepare('SELECT * from visiteur');
                         $reqNomVisiteur->execute();
 
-                        $i = 0;
+                        $i = 1;
                         while($dataNomVisiteur = $reqNomVisiteur->fetch()){
-                            echo'<option value="'.$i.'">'.$dataNomVisiteur["VIS_NOM"] .'</option>';
-                            $i++; 
+                            echo'<option value="'.$dataNomVisiteur["VIS_MATRICULE"].'">'.$dataNomVisiteur["VIS_NOM"].'</option>';
+                            $i++;
                         }
                         
-                        
                     ?>
-                    </select>   
                     <input type="submit" name="submit" id="submit" value="OK">
+                    </select>   
                 </label>
                 <hr>
                 <label for="nom">
@@ -63,7 +76,7 @@
                 </label>
                 <label for="prenom">
                     <p>Prénom</p>
-                    <input type="text" name="prenom" value="<?php echo $data["VIS_PRENOM"];?>" disabled>
+                    <input type="text" name="prenom" value="<?php echo $data["Vis_PRENOM"];?>" disabled>
                 </label>
                 <label for="adresse">
                     <p>Adresse</p>
