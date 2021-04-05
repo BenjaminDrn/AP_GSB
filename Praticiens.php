@@ -1,23 +1,27 @@
 <?php
-    
-    $number = 1;
+
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
-    $req = $bdd->prepare('SELECT * from praticien ');
+    $req = $bdd->prepare('SELECT * FROM visiteur');
     $req->execute();
 
-    if(isset($_POST["selectFamilyName"])){
+    if(isset($_POST["selectFamilyName"]) || isset($_POST["next"]) || isset($_POST["previous"])){
         $number = $_POST["selectFamilyName"];
-        $req = $bdd->prepare('SELECT * from praticien INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE WHERE PRA_NUM = '.$number.' ');
+        $req = $bdd->prepare('SELECT * from visiteur WHERE VIS_MATRICULE = "'.$number.'" ');
+        
+        // if(isset($_POST["next"])){
+        //     $number += 1;
+        // } elseif(isset($_POST["previous"])){
+        //     $number -= 1;
+        // }
+        
         $req->execute();
+        
     }
-
     $data = $req->fetch();
 
-    //WHERE PRA_NUM = '.$number.'
 
-    // echo $req->rowCount();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -39,59 +43,57 @@
         <section id="breadcrumbs-nav">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
-                <li>Praticiens</li>
+                <li>Visiteurs</li>
             </ul>
         </section>
 
-        <!-- ===================== SECTION INFORMATIONS PRATICIENS ===================== -->
-        <section id="praticiens" class="container">
-            <form action="Praticiens.php" method="post">
+        <!-- ===================== SECTION INFORMATIONS VISITEUR ===================== --> 
+        <section id="visiteurs" class="container">
+            <form action="Visiteurs.php" method="post">
                 <label for="famille">
                     <p>Chercher</p>
 
                     <select name="selectFamilyName" id="selectFamilyName">
                     <?php
 
-                        $reqNomPraticien = $bdd->prepare('SELECT * from praticien');
-                        $reqNomPraticien->execute();
+                        $reqNomVisiteur = $bdd->prepare('SELECT * from visiteur');
+                        $reqNomVisiteur->execute();
 
-                        while($dataNomPraticien = $reqNomPraticien->fetch()){
-                            echo'<option value="'.$dataNomPraticien["PRA_NUM"].'">'.$dataNomPraticien["PRA_NOM"].' '.$dataNomPraticien["PRA_PRENOM"].'</option>';
+                        $i = 1;
+                        while($dataNomVisiteur = $reqNomVisiteur->fetch()){
+                            echo'<option value="'.$dataNomVisiteur["VIS_MATRICULE"].'">'.$dataNomVisiteur["VIS_NOM"].' '.$dataNomVisiteur["VIS_PRENOM"].'</option>';
+                            $i++;
                         }
                         
                     ?>
-                    </select>   
                     <input type="submit" name="submit" id="submit" value="OK">
+                    </select>   
                 </label>
                 <hr>
-                <label for="numero">
-                    <p>Numéro</p>
-                    <input type="text" name="numero" value="<?php echo $data["PRA_NUM"];?>" disabled>
-                </label>
                 <label for="nom">
                     <p>Nom</p>
-                    <input type="text" name="nom" value="<?php echo $data["PRA_NOM"];?>" disabled>
+                    <input type="text" name="nom" value="<?php echo $data["VIS_NOM"];?>" disabled>
                 </label>
                 <label for="prenom">
                     <p>Prénom</p>
-                    <input type="text" name="prenom" value="<?php echo $data["PRA_PRENOM"];?>" disabled>
+                    <input type="text" name="prenom" value="<?php echo $data["VIS_PRENOM"];?>" disabled>
                 </label>
                 <label for="adresse">
                     <p>Adresse</p>
-                    <input type="text" name="adresse" value="<?php echo $data["PRA_ADRESSE"];?>" disabled>
+                    <input type="text" name="adresse" value="<?php echo $data["VIS_ADRESSE"];?>" disabled>
                 </label>
                 <label for="ville" class="inputVille">
                     <p>Ville</p>
-                    <input type="text" name="codePostal" value="<?php echo $data["PRA_CP"];?>" disabled>
-                    <input type="text" name="ville" value="<?php echo $data["PRA_VILLE"];?>" disabled>
+                    <input type="text" name="codePostal" value="<?php echo $data["VIS_CP"];?>" disabled>
+                    <input type="text" name="ville" value="<?php echo $data["VIS_VILLE"];?>" disabled>
                 </label>
-                <label for="coeff">
-                    <p>Coeff. Notoriété</p>
-                    <input type="text" name="coeffNotoriete" value="<?php echo $data["PRA_COEFNOTORIETE"];?>" disabled>
+                <label for="secteur">
+                    <p>Secteur</p>
+                    <input type="text" name="secteur" value="<?php echo $data["SEC_CODE"];?>" disabled>
                 </label>
-                <label for="lieuDexercice">
-                    <p>Lieu d'exercice</p>
-                    <input type="text" name="lieuExercice" value="<?php echo $data["TYP_LIBELLE"];?>" disabled>
+                <label for="labo">
+                    <p>Laboratoire</p>
+                    <input type="text" name="labo" value="<?php echo $data["LAB_CODE"];?>" disabled>
                 </label>
 
                 <div class="action__btn">
@@ -103,15 +105,17 @@
                         <a href="index.php"><button>fermer</button></a>
                     </div>
                 </div>
-
             </form>
+
+            
         </section>
+
     </main>
 
     <!-- ===================== SCRIPT JS ===================== -->
     <?php
         include('INCLUDE/script.html');
     ?>
-    
+
 </body>
 </html>
