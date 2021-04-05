@@ -1,25 +1,16 @@
 <?php
     
+    $number = 1;
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
     $req = $bdd->prepare('SELECT * from praticien ');
     $req->execute();
 
-    
-
-    if(isset($_POST["selectFamilyName"]) || isset($_POST["next"]) || isset($_POST["previous"])){
+    if(isset($_POST["selectFamilyName"])){
         $number = $_POST["selectFamilyName"];
-        $req = $bdd->prepare('SELECT * from praticien WHERE PRA_NUM = '.$number.' ');
-        
-        // if(isset($_POST["next"])){
-        //     $number += 1;
-        // } elseif(isset($_POST["previous"])){
-        //     $number -= 1;
-        // }
-        
+        $req = $bdd->prepare('SELECT * from praticien INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE WHERE PRA_NUM = '.$number.' ');
         $req->execute();
-        
     }
 
     $data = $req->fetch();
@@ -61,13 +52,11 @@
                     <select name="selectFamilyName" id="selectFamilyName">
                     <?php
 
-                        $reqNomPraticien = $bdd->prepare('SELECT PRA_NOM from praticien');
+                        $reqNomPraticien = $bdd->prepare('SELECT * from praticien');
                         $reqNomPraticien->execute();
 
-                        $i = 1;
                         while($dataNomPraticien = $reqNomPraticien->fetch()){
-                            echo'<option value="'. $i .'">'.$dataNomPraticien["PRA_NOM"] .'</option>';
-                            $i++; 
+                            echo'<option value="'.$dataNomPraticien["PRA_NUM"].'">'.$dataNomPraticien["PRA_NOM"].' '.$dataNomPraticien["PRA_PRENOM"].'</option>';
                         }
                         
                     ?>
@@ -102,7 +91,7 @@
                 </label>
                 <label for="lieuDexercice">
                     <p>Lieu d'exercice</p>
-                    <input type="text" name="lieuExercice" value="<?php echo $data["TYP_CODE"];?>" disabled>
+                    <input type="text" name="lieuExercice" value="<?php echo $data["TYP_LIBELLE"];?>" disabled>
                 </label>
 
                 <div class="action__btn">
