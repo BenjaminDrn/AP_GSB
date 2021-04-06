@@ -58,14 +58,12 @@
                         $reqNomPraticien = $bdd->prepare('SELECT * from rapport_Visite INNER JOIN praticien ON rapport_Visite.PRA_NUM = praticien.PRA_NUM');
                         $reqNomPraticien->execute();
 
-                        $i = 1;
                         while($dataNomPraticien = $reqNomPraticien->fetch()){
                             echo'<option value="'.$dataNomPraticien["PRA_NUM"].'">'.$dataNomPraticien["PRA_NOM"].' '.$dataNomPraticien["PRA_PRENOM"].'</option>';
-                            $i++;
                         }
                         
                     ?>
-                    <input type="submit" name="submit" id="submit" value="Détails">
+                    <input type="submit" name="submit" id="submit" value="OK">
                     </select>   
                 </label>
                 <label for="date">
@@ -84,15 +82,27 @@
                     <p>Offre d'échantillons</p>
                     <input type="text" name="echantillons" value="" disabled>
                 </label>
-
+                <table>
+                    <tr>
+                      <th>Médicaments</th> 
+                      <th>Nb. Echantillons</th>
+                    </tr>
+                    <?php
+                        $tableau = $bdd->prepare('SELECT * from rapport_Visite INNER JOIN offrir ON rapport_Visite.RAP_NUM = offrir.RAP_NUM');
+                        $tableau->execute();
+                        while($tableauEchantillons = $tableau->fetch()) {
+                            if ($tableauEchantillons["RAP_NUM"] == $data["RAP_NUM"]) {
+                                echo "<tr><td>" .$tableauEchantillons["MED_DEPOTLEGAL"]. "</td><td>" .$tableauEchantillons["OFF_QTE"]. "</td></tr>";
+                            }
+                        };
+                        echo "</table>";
+                    ?>
+                </table>
                 <div class="action__btn">
                     <div class="action__btn_move">
                         <input type="submit" name="previous" id="previous" value="Précedent">
                         <input type="submit" name="next" id="next" value="Suivant">
                         <input type="submit" name="new" id="new" value="Nouveau">
-                    </div>
-                    <div class="action__btn_close">
-                        <a href="index.php"><button>Fermer</button></a>
                     </div>
                 </div>
             </form>
