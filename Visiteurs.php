@@ -3,7 +3,7 @@
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
-    $req = $bdd->prepare('SELECT * FROM visiteur'); //INNER JOIN labo ON visiteur.LAB_CODE = labo.LAB_CODE INNER JOIN secteur ON visiteur.SEC_CODE = secteur.SEC_CODE
+    $req = $bdd->prepare('SELECT * FROM visiteur');
     $req->execute();
 
     if(isset($_POST["selectFamilyName"])){
@@ -80,11 +80,11 @@
                 </label>
                 <label for="secteur">
                     <p>Secteur</p>
-                    <input type="text" name="secteur" value="<?php echo $data["SEC_CODE"]; //if(empty($data["SEC_CODE"])) { echo "";} elseif(isset($data["SEC_CODE"])){ echo $data["SEC_LIBELLE"];?>" disabled>
+                    <input type="text" name="secteur" value="<?php $reqSecteur = $bdd->prepare('SELECT SEC_LIBELLE from secteur WHERE SEC_CODE = "'.$data["SEC_CODE"].'"'); $reqSecteur->execute(); $dataSecteur = $reqSecteur->fetch(); echo $dataSecteur["SEC_LIBELLE"]?>" disabled>
                 </label>
                 <label for="labo">
                     <p>Laboratoire</p>
-                    <input type="text" name="labo" value="<?php echo $data["LAB_CODE"];?>" disabled>
+                    <input type="text" name="labo" value="<?php $reqLabo = $bdd->prepare('SELECT LAB_NOM from labo WHERE LAB_CODE = "'.$data["LAB_CODE"].'"'); $reqLabo->execute(); $dataLabo = $reqLabo->fetch(); echo $dataLabo["LAB_NOM"]?>" disabled>
                 </label>
 
                 <div class="action__btn">
