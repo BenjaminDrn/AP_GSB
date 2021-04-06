@@ -1,10 +1,17 @@
 <?php
+
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
-
-    $req = $bdd->prepare('SELECT * from visiteur');
+    $req = $bdd->prepare('SELECT * FROM visiteur'); //INNER JOIN labo ON visiteur.LAB_CODE = labo.LAB_CODE INNER JOIN secteur ON visiteur.SEC_CODE = secteur.SEC_CODE
     $req->execute();
+
+    if(isset($_POST["selectFamilyName"])){
+        $number = $_POST["selectFamilyName"];
+        $req = $bdd->prepare('SELECT * FROM visiteur WHERE VIS_MATRICULE = "'.$number.'"');
+        $req->execute();
+    }
+
     $data = $req->fetch();
 
 
@@ -42,19 +49,16 @@
                     <select name="selectFamilyName" id="selectFamilyName">
                     <?php
 
-                        $reqNomVisiteur = $bdd->prepare('SELECT VIS_NOM from visiteur');
+                        $reqNomVisiteur = $bdd->prepare('SELECT * from visiteur');
                         $reqNomVisiteur->execute();
 
-                        $i = 0;
                         while($dataNomVisiteur = $reqNomVisiteur->fetch()){
-                            echo'<option value="'.$i.'">'.$dataNomVisiteur["VIS_NOM"] .'</option>';
-                            $i++; 
+                            echo'<option value="'.$dataNomVisiteur["VIS_MATRICULE"].'">'.$dataNomVisiteur["VIS_NOM"].' '.$dataNomVisiteur["VIS_PRENOM"].'</option>';
                         }
                         
-                        
                     ?>
-                    </select>   
                     <input type="submit" name="submit" id="submit" value="OK">
+                    </select>   
                 </label>
                 <hr>
                 <label for="nom">
@@ -76,7 +80,7 @@
                 </label>
                 <label for="secteur">
                     <p>Secteur</p>
-                    <input type="text" name="secteur" value="<?php echo $data["SEC_CODE"];?>" disabled>
+                    <input type="text" name="secteur" value="<?php echo $data["SEC_CODE"]; //if(empty($data["SEC_CODE"])) { echo "";} elseif(isset($data["SEC_CODE"])){ echo $data["SEC_LIBELLE"];?>" disabled>
                 </label>
                 <label for="labo">
                     <p>Laboratoire</p>
@@ -88,18 +92,13 @@
                         <input type="submit" name="previous" id="previous" value="précedent">
                         <input type="submit" name="next" id="next" value="suivant">
                     </div>
-                    <div class="action__btn_close">
-                        <a href="index.php"><button>fermer</button></a>
-                    </div>
                 </div>
             </form>
-
-            
         </section>
 
     </main>
 
-    <!-- ===================== SCRIPT JS ===================== -->
+    <!-- ===================== SCRIPT JS ===================== --> 
     <?php
         include('INCLUDE/script.html');
     ?>
