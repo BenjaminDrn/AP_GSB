@@ -3,11 +3,14 @@
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
-    $reqLibMed = $bdd->prepare('SELECT FAM_LIBELLE from medicament INNER JOIN famille ON medicament.FAM_CODE = famille.FAM_CODE');
-    $reqLibMed->execute();
-
-    $req = $bdd->prepare('SELECT * from medicament');
+    $req = $bdd->prepare('SELECT * from medicament INNER JOIN famille ON medicament.FAM_CODE = famille.FAM_CODE');
     $req->execute();
+
+    if(isset($_POST["selectFamilyMed"])){
+        $name = $_POST["selectFamilyMed"];
+        $req = $bdd->prepare('SELECT * from medicament INNER JOIN famille ON medicament.FAM_CODE = famille.FAM_CODE WHERE MED_NOMCOMMERCIAL = "'.$name.'"');
+        $req->execute();
+    }
     $data = $req->fetch();
 
     
@@ -43,29 +46,26 @@
                     <p>Code</p>
                     <input type="text" name="code" value="<?php echo $data["MED_DEPOTLEGAL"];?>" disabled>
                 </label>
+                
                 <label for="nomCommercial">
                     <p>Nom commercial</p>
-                    <input type="text" name="nomCommercial" value="<?php echo $data["MED_NOMCOMMERCIAL"];?>" disabled>
-                </label>
-                <label for="famille">
-                    <p>Famille</p>
-
                     <select name="selectFamilyMed" id="selectFamilyMed">
                     <?php
+                        $reqMed = $bdd->prepare('SELECT * from medicament INNER JOIN famille ON medicament.FAM_CODE = famille.FAM_CODE');
+                        $reqMed->execute();
 
-
-
-                        $i = 0;
-                        while($dataLibMed = $reqLibMed->fetch()){
-                            echo'<option value="'.$i.'">'.$dataLibMed["FAM_LIBELLE"] .'</option>';
-                            $i++; 
+                        while($dataMed = $reqMed->fetch()){
+                            echo'<option value="'.$dataMed["MED_NOMCOMMERCIAL"].'">'.$dataMed["MED_NOMCOMMERCIAL"].'</option>';
                         }
-                        
                     ?>
                     </select>
                     <input type="submit" value="OK">
                 </label>
-                
+
+                <label for="famille">
+                    <p>Famille</p>
+                    <input type="text" name="famille" value="<?php echo $data["FAM_LIBELLE"];?>" disabled>
+                </label>
                 <label for="composition">
                     <p>Composition</p>
                     <input type="text" name="composition" value="<?php echo $data["MED_COMPOSITION"];?>" disabled>
@@ -88,14 +88,8 @@
                         <input type="submit" name="previous" id="previous" value="précedent">
                         <input type="submit" name="next" id="next" value="suivant">
                     </div>
-                    <div class="action__btn_close">
-                        <a href="index.php"><button>fermer</button></a>
-                    </div>
                 </div>
-                
             </form>
-
-            
         </section>
     </main>
 
