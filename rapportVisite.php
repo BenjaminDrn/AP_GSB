@@ -8,12 +8,19 @@
 
     if(isset($_POST["selectFamilyName"])){
         $number = $_POST["selectFamilyName"];
-        $req = $bdd->prepare('SELECT * from rapport_visite WHERE PRA_NUM = "'.$number.'" ');
+        $req = $bdd->prepare('SELECT * from rapport_visite WHERE PRA_NUM = '.$number.'');
+        $reqNom = $bdd->prepare('SELECT * from praticien INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE WHERE PRA_NUM = '.$number.'');
         $req->execute();
-        
+        $reqNom->execute();
     }
 
     $data = $req->fetch();
+
+    if(empty($_POST["selectFamilyName"])){
+        $reqNom = $bdd->prepare('SELECT * from praticien INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE WHERE PRA_NUM = '.$data["PRA_NUM"].'');
+        $reqNom->execute();
+        $dataNom = $reqNom->fetch();
+    }
 
 
 ?>
@@ -25,13 +32,15 @@
         include('INCLUDE/head.html');
     ?>
 
-<body>
+    <link rel="stylesheet" href="detail.css">
 
+<body>
     <!-- ===================== HEADER + NAV ===================== -->   
     <?php 
         include('INCLUDE/navBar.html');
     ?>
 
+    <button class="button" data-modal="modalOne">Detail</button>
     <main>
         <!-- ===================== SECTION BREADCRUMBS NAVIGATION ===================== -->           
         <section id="breadcrumbs-nav">
@@ -58,13 +67,18 @@
                         $reqNomPraticien = $bdd->prepare('SELECT * from rapport_Visite INNER JOIN praticien ON rapport_Visite.PRA_NUM = praticien.PRA_NUM');
                         $reqNomPraticien->execute();
 
+                        if (isset($_POST["selectFamilyName"])) {
+                            $dataNom = $reqNom->fetch();
+                            echo '<option selected="selected" hidden disabled name="selected">'.$dataNom["PRA_NOM"].' '.$dataNom["PRA_PRENOM"].'</option>';
+                        }
+
                         while($dataNomPraticien = $reqNomPraticien->fetch()){
                             echo'<option value="'.$dataNomPraticien["PRA_NUM"].'">'.$dataNomPraticien["PRA_NOM"].' '.$dataNomPraticien["PRA_PRENOM"].'</option>';
                         }
                         
                     ?>
                     <input type="submit" name="submit" id="submit" value="OK">
-                    </select>   
+                    </select>  
                 </label>
                 <label for="date">
                     <p>Date Rapport</p>
@@ -80,7 +94,6 @@
                 </label>
                 <label for="echantillons">
                     <p>Offre d'échantillons</p>
-                    <input type="text" name="echantillons" value="" disabled>
                 </label>
                 <table>
                     <tr>
@@ -111,6 +124,51 @@
         </section>
 
     </main>
+
+    <div id="modalOne" class="modal">
+        <div class="modal-content">
+            <div class="contact-form">
+                <h2>Informations du Praticien</h2>
+                <p>Numéro</p>
+                <input type="text" value="<?php echo $dataNom["PRA_NUM"];?>" disabled>
+                <p>Nom</p>
+                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_NOM"];?>" disabled>
+                <p>Prenom</p>
+                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_PRENOM"];?>" disabled>
+                <p>Adresse</p>
+                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_ADRESSE"];?>" disabled>
+                <p>Ville</p>
+                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_VILLE"];?>" disabled>
+                <p>Coeff. Notoriété</p>
+                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_COEFNOTORIETE"];?>" disabled>
+                <p>Lieu d'exercice</p>
+                <input type="text" name="bilan" value="<?php echo $dataNom["TYP_LIBELLE"];?>" disabled>
+            </div>
+        </div>
+    </div>
+    <script>
+        var modalBtns = [...document.querySelectorAll(".button")];
+        modalBtns.forEach(function(btn) {
+            btn.onclick = function() {
+                var modal = btn.getAttribute('data-modal');
+                document.getElementById(modal).style.display = "block";
+            }
+        });
+      
+        var closeBtns = [...document.querySelectorAll(".close")];
+        closeBtns.forEach(function(btn){
+            btn.onclick = function() {
+                var modal = btn.closest('.modal');
+                modal.style.display = "none";
+            }
+        });
+      
+        window.onclick = function(event) {
+            if (event.target.className === "modal") {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
 
     <!-- ===================== SCRIPT JS ===================== -->
     <?php
