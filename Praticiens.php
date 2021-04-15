@@ -1,5 +1,4 @@
 <?php
-    
     include('INCLUDE/sessionStart.php');
     include('INCLUDE/authentification.php');
 
@@ -8,9 +7,10 @@
 
     if(isset($_POST["selectFamilyName"])){
         $number = $_POST["selectFamilyName"];
-        $req = $bdd->prepare('SELECT * from praticien INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE WHERE PRA_NUM = '.$number.' ');
+        $req = $bdd->prepare('SELECT * from praticien INNER JOIN type_praticien ON praticien.TYP_CODE = type_praticien.TYP_CODE WHERE PRA_NUM = '.$number.'');
         $req->execute();
     }
+
     $data = $req->fetch();
 
 ?>
@@ -49,6 +49,10 @@
 
                         $reqNomPraticien = $bdd->prepare('SELECT * from praticien');
                         $reqNomPraticien->execute();
+
+                        if (isset($_POST["selectFamilyName"])) {
+                            echo'<option selected="selected" hidden disabled name="selected">'.$data["PRA_NOM"].' '.$data["PRA_PRENOM"].'</option>';
+                        }
 
                         while($dataNomPraticien = $reqNomPraticien->fetch()){
                             echo'<option value="'.$dataNomPraticien["PRA_NUM"].'">'.$dataNomPraticien["PRA_NOM"].' '.$dataNomPraticien["PRA_PRENOM"].'</option>';
