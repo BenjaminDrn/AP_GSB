@@ -32,8 +32,6 @@
         include('INCLUDE/head.html');
     ?>
 
-    <link rel="stylesheet" href="detail.css">
-
 <body>
     <!-- ===================== HEADER + NAV ===================== -->   
     <?php 
@@ -124,52 +122,6 @@
         </section>
 
     </main>
-
-    <div id="modalOne" class="modal">
-        <div class="modal-content">
-            <div class="contact-form">
-                <h2>Informations du Praticien</h2>
-                <p>Numéro</p>
-                <input type="text" value="<?php echo $dataNom["PRA_NUM"];?>" disabled>
-                <p>Nom</p>
-                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_NOM"];?>" disabled>
-                <p>Prenom</p>
-                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_PRENOM"];?>" disabled>
-                <p>Adresse</p>
-                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_ADRESSE"];?>" disabled>
-                <p>Ville</p>
-                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_VILLE"];?>" disabled>
-                <p>Coeff. Notoriété</p>
-                <input type="text" name="bilan" value="<?php echo $dataNom["PRA_COEFNOTORIETE"];?>" disabled>
-                <p>Lieu d'exercice</p>
-                <input type="text" name="bilan" value="<?php echo $dataNom["TYP_LIBELLE"];?>" disabled>
-            </div>
-        </div>
-    </div>
-    <script>
-        var modalBtns = [...document.querySelectorAll(".button")];
-        modalBtns.forEach(function(btn) {
-            btn.onclick = function() {
-                var modal = btn.getAttribute('data-modal');
-                document.getElementById(modal).style.display = "block";
-            }
-        });
-      
-        var closeBtns = [...document.querySelectorAll(".close")];
-        closeBtns.forEach(function(btn){
-            btn.onclick = function() {
-                var modal = btn.closest('.modal');
-                modal.style.display = "none";
-            }
-        });
-      
-        window.onclick = function(event) {
-            if (event.target.className === "modal") {
-                event.target.style.display = "none";
-            }
-        }
-    </script>
-
     <!-- ===================== SCRIPT JS ===================== -->
     <?php
         include('INCLUDE/script.html');
