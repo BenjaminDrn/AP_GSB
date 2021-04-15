@@ -45,12 +45,15 @@
             <form action="Visiteurs.php" method="post">
                 <label for="famille">
                     <p>Chercher</p>
-
                     <select name="selectFamilyName" id="selectFamilyName">
                     <?php
 
                         $reqNomVisiteur = $bdd->prepare('SELECT * from visiteur');
                         $reqNomVisiteur->execute();
+
+                        if (isset($_POST["selectFamilyName"])) {
+                            echo'<option selected="selected" hidden disabled name="selected">'.$data["VIS_NOM"].' '.$data["VIS_PRENOM"].'</option>';
+                        }
 
                         while($dataNomVisiteur = $reqNomVisiteur->fetch()){
                             echo'<option value="'.$dataNomVisiteur["VIS_MATRICULE"].'">'.$dataNomVisiteur["VIS_NOM"].' '.$dataNomVisiteur["VIS_PRENOM"].'</option>';
@@ -58,7 +61,7 @@
                         
                     ?>
                     <input type="submit" name="submit" id="submit" value="OK">
-                    </select>   
+                    </select>
                 </label>
                 <hr>
                 <label for="nom">
@@ -89,8 +92,8 @@
 
                 <div class="action__btn">
                     <div class="action__btn_move">
-                        <input type="submit" name="previous" id="previous" value="précedent">
-                        <input type="submit" name="next" id="next" value="suivant">
+                        <input type="submit" name="previous" id="previous" value="précedent" onclick="Previous()">
+                        <input type="submit" name="next" id="next" value="suivant" onclick="Next()">
                     </div>
                 </div>
             </form>
