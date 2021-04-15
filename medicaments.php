@@ -54,6 +54,10 @@
                         $reqMed = $bdd->prepare('SELECT * from medicament INNER JOIN famille ON medicament.FAM_CODE = famille.FAM_CODE');
                         $reqMed->execute();
 
+                        if (isset($_POST["selectFamilyMed"])) {
+                            echo'<option selected="selected" hidden disabled name="selected">'.$data["MED_NOMCOMMERCIAL"].'</option>';
+                        }
+
                         while($dataMed = $reqMed->fetch()){
                             echo'<option value="'.$dataMed["MED_NOMCOMMERCIAL"].'">'.$dataMed["MED_NOMCOMMERCIAL"].'</option>';
                         }
