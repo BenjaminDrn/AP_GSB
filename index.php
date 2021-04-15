@@ -29,13 +29,13 @@
                         <p>Rapports de visite</p>
                     </a>
                 
-                    <a href="Visiteurs.php" class="directionList__container">
+                    <a href="visiteurs.php" class="directionList__container">
                         <span><i class="fas fa-user"></i></span>                      
                         <hr>
                         <p>Visiteurs</p>
                     </a>
 
-                    <a href="Praticiens.php" class="directionList__container">
+                    <a href="praticiens.php" class="directionList__container">
                         <span><i class="fas fa-user-md"></i></span>
                         <hr>
                         <p>Praticiens</p>
