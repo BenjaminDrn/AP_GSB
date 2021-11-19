@@ -1,59 +1,52 @@
-<?php
-    include('INCLUDE/sessionStart.php');
+<?php 
+
+require_once('config/database.php');
+require_once('includes/function.php');
+
+if(isset($_POST['connexion-btn'])){
+
+    if(isset($_POST['login'], $_POST['password'])){
+
+        extract($_POST);
+
+        if(isNotEmpty(['login', 'password'])){
+
+            // Création du format de la date
+            $datePassword = date_create($password);
+            $dateFormatPassword = date_format($datePassword,'Y-m-d H:i:s');
+
+            // Requete sql pour verifier si les identifiants sont bon
+            $req = $db -> prepare('SELECT VIS_NOM, VIS_DATEEMBAUCHE, VIS_MATRICULE FROM visiteur WHERE VIS_NOM = :visNom AND VIS_DATEEMBAUCHE = :visDateembauche');
+            $req -> execute(array(':visNom' => $login, ':visDateembauche' => $dateFormatPassword));
+            $data = $req -> fetch();
+
+            if($data){
+                
+                session_start();
+                $_SESSION['loginName'] = $_POST['login'];
+                $_SESSION['loginMatricule'] = $data['VIS_MATRICULE'];
+                header('Location: accueil.php');
+
+            } else {
+
+                alertsError('Mauvais identifiants');
+
+            }
+            
+            $req->closeCursor();
+            
+        } else {
+            alertsError('remplissez tous les champs');
+        }
+
+    } else {
+        echo 'error';
+    }
+
+} 
+
+// Code html
+
+require_once('views/index.views.php');
+
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-    
-    <!-- ===================== HEAD ===================== -->
-    <?php
-        include('INCLUDE/head.html');
-    ?>
-
-<body>
-    
-    <!-- ===================== HEADER + NAV ===================== -->
-
-    <?php
-        include('INCLUDE/navBar.html');
-    ?>  
-    
-
-    <main>
-
-        <!-- ===================== SECTION DIRECTION PAGE ===================== -->
-        <section id="direction-list">
-                
-                    <a href="rapportVisite.php" class="directionList__container">
-                        <span><i class="fas fa-paste"></i></span>
-                        <hr>
-                        <p>Rapports de visite</p>
-                    </a>
-                
-                    <a href="visiteurs.php" class="directionList__container">
-                        <span><i class="fas fa-user"></i></span>                      
-                        <hr>
-                        <p>Visiteurs</p>
-                    </a>
-
-                    <a href="praticiens.php" class="directionList__container">
-                        <span><i class="fas fa-user-md"></i></span>
-                        <hr>
-                        <p>Praticiens</p>
-                    </a>
-
-                    <a href="medicaments.php" class="directionList__container">
-                        <span><i class="fas fa-pills"></i></span>
-                        <hr>
-                        <p>Medicaments</p>
-                    </a>
-        </section>
-
-    </main>
-
-    <!-- ===================== SCRIPT JS ===================== -->
-    <?php
-        include('INCLUDE/script.html');
-    ?>
-    
-</body>
-</html>

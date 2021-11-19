@@ -1,110 +1,47 @@
-<?php
+<?php 
 
-    include('INCLUDE/sessionStart.php');
-    include('INCLUDE/authentification.php');
+// Constantes
+define("locationPageName", "Visiteurs");
+define("locationPageLink", "visiteurs.php");
 
-    $req = $bdd->prepare('SELECT * FROM visiteur');
-    $req->execute();
 
-    if(isset($_POST["selectFamilyName"])){
-        $number = $_POST["selectFamilyName"];
-        $req = $bdd->prepare('SELECT * FROM visiteur WHERE VIS_MATRICULE = "'.$number.'"');
-        $req->execute();
-    }
+// Inclusion de la connexion à la base de donnée
+require_once('config/database.php');
 
-    $data = $req->fetch();
 
+// Inclusion des fonctions et de la gestion des sessions
+require_once('includes/function.php');
+require_once('includes/gestionSession.php');
+
+
+$user_matricule = $_SESSION['loginMatricule'];
+
+// Requete pour récupérer le nombre de visiteurs
+$req_count = $db -> prepare("SELECT * FROM visiteur");
+$req_count -> execute();
+$nb_total_pages = $req_count -> rowCount() - 1;
+$req_count -> closeCursor();
+
+
+// détermination de la page dans laquelle nous sommes
+currentPageLink();
+
+
+// Requete pour afficher les données du visiteur selectionné
+$req_currentPage = $db -> prepare(
+    "SELECT * FROM visiteur
+    INNER JOIN labo ON visiteur.LAB_CODE = labo.LAB_CODE
+    ORDER BY VIS_MATRICULE ASC LIMIT $currentPage , 1"
+);
+$req_currentPage -> execute();
+$data = $req_currentPage -> fetch();
+
+
+// Inclusion de la page accueil views
+require_once('views/visiteurs.views.php');
+
+
+// fermer les requetes
+$req_currentPage -> closeCursor();
 
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-
-    <!-- ===================== HEAD ===================== -->
-    <?php
-        include('INCLUDE/head.html');
-    ?>
-
-<body>
-
-    <!-- ===================== HEADER + NAV ===================== -->   
-    <?php 
-        include('INCLUDE/navBar.html');
-    ?>
-
-    <main>
-        <!-- ===================== SECTION BREADCRUMBS NAVIGATION ===================== -->           
-        <section id="breadcrumbs-nav">
-            <ul>
-                <li><a href="index.php">Accueil</a></li>
-                <li>Visiteurs</li>
-            </ul>
-        </section>
-
-        <!-- ===================== SECTION INFORMATIONS VISITEUR ===================== --> 
-        <section id="visiteurs" class="container">
-            <form action="Visiteurs.php" method="post">
-                <label for="famille">
-                    <p>Chercher</p>
-                    <select name="selectFamilyName" id="selectFamilyName">
-                    <?php
-
-                        $reqNomVisiteur = $bdd->prepare('SELECT * from visiteur');
-                        $reqNomVisiteur->execute();
-
-                        if (isset($_POST["selectFamilyName"])) {
-                            echo'<option selected="selected" hidden disabled name="selected">'.$data["VIS_NOM"].' '.$data["VIS_PRENOM"].'</option>';
-                        }
-
-                        while($dataNomVisiteur = $reqNomVisiteur->fetch()){
-                            echo'<option value="'.$dataNomVisiteur["VIS_MATRICULE"].'">'.$dataNomVisiteur["VIS_NOM"].' '.$dataNomVisiteur["VIS_PRENOM"].'</option>';
-                        }
-                        
-                    ?>
-                    <input type="submit" name="submit" id="submit" value="OK">
-                    </select>
-                </label>
-                <hr>
-                <label for="nom">
-                    <p>Nom</p>
-                    <input type="text" name="nom" value="<?php echo $data["VIS_NOM"];?>" disabled>
-                </label>
-                <label for="prenom">
-                    <p>Prénom</p>
-                    <input type="text" name="prenom" value="<?php echo $data["VIS_PRENOM"];?>" disabled>
-                </label>
-                <label for="adresse">
-                    <p>Adresse</p>
-                    <input type="text" name="adresse" value="<?php echo $data["VIS_ADRESSE"];?>" disabled>
-                </label>
-                <label for="ville" class="inputVille">
-                    <p>Ville</p>
-                    <input type="text" name="codePostal" value="<?php echo $data["VIS_CP"];?>" disabled>
-                    <input type="text" name="ville" value="<?php echo $data["VIS_VILLE"];?>" disabled>
-                </label>
-                <label for="secteur">
-                    <p>Secteur</p>
-                    <input type="text" name="secteur" value="<?php $reqSecteur = $bdd->prepare('SELECT SEC_LIBELLE from secteur WHERE SEC_CODE = "'.$data["SEC_CODE"].'"'); $reqSecteur->execute(); $dataSecteur = $reqSecteur->fetch(); echo $dataSecteur["SEC_LIBELLE"]?>" disabled>
-                </label>
-                <label for="labo">
-                    <p>Laboratoire</p>
-                    <input type="text" name="labo" value="<?php $reqLabo = $bdd->prepare('SELECT LAB_NOM from labo WHERE LAB_CODE = "'.$data["LAB_CODE"].'"'); $reqLabo->execute(); $dataLabo = $reqLabo->fetch(); echo $dataLabo["LAB_NOM"]?>" disabled>
-                </label>
-
-                <div class="action__btn">
-                    <div class="action__btn_move">
-                        <input type="submit" name="previous" id="previous" value="précedent" onclick="Previous()">
-                        <input type="submit" name="next" id="next" value="suivant" onclick="Next()">
-                    </div>
-                </div>
-            </form>
-        </section>
-
-    </main>
-
-    <!-- ===================== SCRIPT JS ===================== --> 
-    <?php
-        include('INCLUDE/script.html');
-    ?>
-
-</body>
-</html>

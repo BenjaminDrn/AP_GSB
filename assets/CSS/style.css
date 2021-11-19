@@ -1,0 +1,564 @@
+/* ==================== IMPORTATIONS ==================== */
+
+@import url('root.css');
+@import url('reset.css');
+
+/* ==================== FONTS ROBOTO ==================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
+/* ==================== CSS GENERAL ==================== */
+
+*,
+ ::before,
+ ::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--f-family);
+    font-size: var(--fsize-normal);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+
+/* ==================== NAV BAR ==================== */
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background: #fff;
+    box-shadow: 0px 5px 20px rgba(51, 51, 51, 0.2);
+    z-index: 99;
+}
+
+.navbar {
+    position: relative;
+    width: 100%;
+    height: var(--header-height);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar #toggleNavList .bx {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.navbar .navbar__brand img {
+    height: 45px;
+}
+
+.navbar .navbar__list {
+    position: absolute;
+    top: var(--header-height);
+    left: -100%;
+    width: 100%;
+    background: var(--gray-1);
+    transition: all 0.15s ease-in-out;
+}
+
+.navbar .navbar__link {
+    position: relative;
+    display: block;
+    font-size: 15px;
+    padding: 20px;
+    color: #333;
+}
+
+.navbar .navbar__item.active .navbar__link {
+    background: #e6e6e6;
+    color: var(--blue);
+}
+
+.navbar .navbar__item.active .navbar__link::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 55px;
+    background: var(--blue);
+}
+
+#bgToggleNavList {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 50;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+}
+
+
+/* show */
+
+.navbar .navbar__list.show {
+    left: 0;
+}
+
+#bgToggleNavList.show {
+    visibility: visible;
+}
+
+
+/* ===== drop-down ===== */
+
+.navbar__drop .drop-down {
+    position: relative;
+}
+
+.navbar__drop .drop-down a {
+    display: flex;
+    padding: 10px 15px;
+    font-size: 15px;
+    color: #333;
+    background: var(--gray-1);
+    border-radius: 30px;
+}
+
+.navbar__drop .drop-down a .bx {
+    margin-right: 10px;
+}
+
+.navbar__drop .drop-down ul {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    top: 60px;
+    width: 150px;
+    right: 0;
+    background: #fff;
+    box-shadow: 0px 5px 20px rgba(51, 51, 51, 0.3);
+    transition: all 0.3s ease-in-out
+}
+
+.navbar__drop .drop-down:hover ul {
+    top: 45px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.navbar__drop .drop-down ul li a {
+    background: none;
+    border-radius: 0;
+    padding: 15px;
+}
+
+.navbar__drop .drop-down label {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    color: var(--deconnexion);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar__drop .drop-down label:hover {
+    background: var(--deconnexion-hover);
+    color: #fff;
+}
+
+.navbar__drop .drop-down label .bx {
+    margin-right: 10px;
+}
+
+.navbar__drop .drop-down form input {
+    display: none;
+}
+
+
+/* ==================== MAIN ==================== */
+
+#main {
+    padding-top: var(--header-height);
+}
+
+
+/* ==================== SECTIONS ==================== */
+
+section {
+    padding: 30px 60px;
+}
+
+section h1 {
+    margin: 30px 0;
+    font-size: 40px;
+    font-weight: 600;
+}
+
+
+/* ==================== BREADCRUMBS ==================== */
+
+.breadcrumbs__container {
+    padding: 30px 60px 0 60px;
+    display: flex;
+}
+
+.breadcrumbs__container li,
+.breadcrumbs__container li a {
+    color: #838383;
+}
+
+.breadcrumbs__container li a {
+    text-decoration: underline;
+}
+
+.breadcrumbs__container li+li:before {
+    padding: 8px;
+    color: #838383;
+    content: "/";
+}
+
+
+/* ==================== FORMULAIRES ==================== */
+
+.form__container input[type="text"],
+.form__container input[type="date"],
+.form__container textarea {
+    width: 80%;
+    padding: 15px;
+    margin: 15px 0;
+    border: 1px solid #cccccc;
+    height: 45px;
+}
+
+.form__container .select__item {
+    display: flex;
+    width: 80%;
+    margin: 15px 0;
+}
+
+.form__container .select__item select {
+    position: relative;
+    width: calc(100% - 50px);
+    padding-left: 15px;
+    font-size: 15px;
+    font-family: var(--f-family);
+    border: 1px solid #cccccc;
+    border-left: 0;
+    height: 45px;
+    outline: none;
+}
+
+.form__container .select__item button {
+    width: 50px;
+    height: 45px;
+    padding: 0;
+    border: 1px solid #cccccc;
+    border-right: 0;
+}
+
+.form__container .form__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ==================== BTN PAGINATION ==================== */
+
+.action__btn .pagination {
+    display: flex;
+    padding-top: 40px;
+}
+
+#display-data-rapport .pagination {
+    padding: 0;
+}
+
+.action__btn .pagination__btn a {
+    height: 45px;
+    display: inline-block;
+    padding: 15px 25px;
+    margin-right: 15px;
+    background: #202020;
+    color: #fff;
+    user-select: none;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.action__btn .pagination__btn a:hover {
+    background: #333;
+}
+
+.action__btn .pagination__btn.disabled a {
+    background: #575757;
+    color: #b1b1b1;
+    pointer-events: none;
+}
+
+
+/* ==================== SECTION CONNEXION ==================== */
+
+#connexion {
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    background: var(--gray-1);
+}
+
+#connexion .connexion_msg {
+    width: calc(100% - 450px);
+    padding: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#connexion h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 60px;
+    text-transform: uppercase;
+}
+
+#connexion form {
+    background: #fff;
+    width: 450px;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#connexion form h2 {
+    font-size: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 20px 0;
+}
+
+#connexion form input {
+    width: 100%;
+    padding: 20px 5px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    border-bottom: 2px solid var(--gray-1);
+    transition: all 0.3s ease-in-out;
+}
+
+#connexion form input:focus {
+    border-bottom: 2px solid #2c8eff;
+}
+
+#connexion form input[type="submit"] {
+    width: 60%;
+    padding: 15px 20px;
+    margin: 20px auto;
+    border-radius: 30px;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    border: 0;
+    background: linear-gradient(90deg, #2c8eff, #0062ff);
+    box-shadow: 0px 5px 25px -5px rgb(44, 142, 255);
+    transition: all 0.3s ease-in-out;
+}
+
+#connexion form input[type="submit"]:hover {
+    box-shadow: 0px 6px 25px rgb(44, 142, 255);
+}
+
+
+/* ==================== SECTION ACCUEIL ==================== */
+
+
+/* ==================== SECTION RAPPORTS ==================== */
+
+
+/* ===== Tableau offre échantillons ===== */
+
+.form__row table {
+    width: 80%;
+    border-collapse: collapse;
+}
+
+.form__row thead td {
+    background: #202020;
+    color: #fff;
+}
+
+.form__row td {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+}
+
+
+/* ===== BTN ===== */
+
+.btn__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 50px;
+    font-size: 15px;
+    height: 95px;
+}
+
+.btn_new_rapport {
+    display: flex;
+    padding: 50px 0 0 0;
+    height: 95px;
+}
+
+#saveNewRapport,
+#ExitNewRapport,
+#btn-newRapport {
+    display: inline-block;
+    padding: 15px 25px;
+    user-select: none;
+    outline: none;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+#btn-newRapport,
+#saveNewRapport {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    font-size: 15px;
+    font-family: var(--f-family);
+    background: linear-gradient(90deg, #2c8eff, #0062ff);
+    box-shadow: 0px 5px 25px -5px rgb(44, 142, 255);
+}
+
+#btn-newRapport:hover,
+#saveNewRapport:hover {
+    box-shadow: 0px 6px 25px rgb(44, 142, 255);
+}
+
+#saveNewRapport,
+#ExitNewRapport {
+    margin-right: 15px;
+}
+
+#ExitNewRapport {
+    background: #202020;
+}
+
+#ExitNewRapport:hover {
+    background: var(--deconnexion-hover);
+}
+
+
+/* ===== Formulaire new rapport ===== */
+
+#choicePraticienNewRapport {
+    width: 100%;
+    border-left: 1px solid #cccccc;
+}
+
+#BilanNewRapport {
+    height: 100px;
+}
+
+.table_new_offer {
+    width: 80%;
+}
+
+.table_new_offer #offert-config {
+    width: 100%;
+    height: 45px;
+    display: flex;
+}
+
+.table_new_offer .btn_add_offer .bx {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    background: #2c8eff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.table_new_offer #offert-config select,
+.table_new_offer #offert-config input[type="number"] {
+    width: calc(50% - 23px);
+    padding-left: 15px;
+    border: 1px solid #cccccc;
+    outline: none;
+}
+
+
+/* ==================== SECTION PRATICIENS / VISITEURS ==================== */
+
+.city__infos {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.city__infos #vis-cp {
+    width: 30%;
+}
+
+.city__infos #vis-ville {
+    width: 65%;
+}
+
+
+/* ==================== SECTION MEDICAMENTS ==================== */
+
+#med-effets,
+#med-contre-indic {
+    height: 90px;
+    font-size: 15px;
+    font-family: var(--f-family);
+}
+
+
+/* ==================== SECTION PROFIL ==================== */
+
+.btn_save_infos {
+    padding-top: 50px;
+}
+
+.btn_save_infos #saveNewInfos {
+    padding: 15px 25px;
+    user-select: none;
+    outline: none;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    font-size: 15px;
+    font-family: var(--f-family);
+    background: linear-gradient(90deg, #2c8eff, #0062ff);
+    box-shadow: 0px 5px 25px -5px rgb(44, 142, 255);
+}
+
+.btn_save_infos #saveNewInfos:hover {
+    box-shadow: 0px 6px 25px rgb(44, 142, 255);
+}
+
+
+/* RESPONSIVE */
+
+
+/*@media screen and (min-width: 576px) {}
+
+@media screen and (min-width: 768px) {}
+
+@media screen and (min-width: 992px) {}
+
+@media screen and (min-width: 1200px) {}*/

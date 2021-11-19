@@ -1,0 +1,35 @@
+:root {
+    --header-height: 70px;
+    --fsize-normal: 15px;
+    --fsize-lite: 13px;
+    --fsize-icons: 30px;
+    /* ============ Colors ============*/
+    --white: #ffffff;
+    --gray-1: #f0f0f0;
+    --gray-2: #333333;
+    --blue: #2c8eff;
+    --deconnexion: #db4b4b;
+    --deconnexion-hover: #e00000;
+    /* ============ Font-Family ============*/
+    --f-family: 'roboto', sans-serif;
+    /* ============ Font-Family ============*/
+    --zindex-fixed: 100;
+}
+
+@media screen and (min-width: 768px) {
+     :root {
+        --header-height: 80px;
+    }
+}
+
+
+/* RESPONSIVE */
+
+
+/*@media screen and (min-width: 576px) {}
+
+@media screen and (min-width: 768px) {}
+
+@media screen and (min-width: 992px) {}
+
+@media screen and (min-width: 1200px) {}*/
